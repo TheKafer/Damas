@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>Damas</label>
+	</settings>
+	<users>
+		<user>
+			<path>Damas.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>Damas.jcp</path>
+		</project>
+	</projects>
+</workspace>

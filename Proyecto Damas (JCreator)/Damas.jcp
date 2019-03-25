@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+	<settings>
+		<label>Damas</label>
+		<root_path>\</root_path>
+		<output_path>\</output_path>
+		<source_path>\</source_path>
+		<jdkprofile_ref>JDK version 1.6.0_13</jdkprofile_ref>
+		<compiler_ref/>
+		<ant_ref/>
+	</settings>
+	<ant_events/>
+	<run_items/>
+	<runtimes>
+		<runtime>
+			<label>&lt;Default&gt;</label>
+			<application_ref/>
+			<applet_ref/>
+			<debugger_ref/>
+			<param/>
+			<run>Main</run>
+			<verify>true</verify>
+		</runtime>
+	</runtimes>
+	<libraries/>
+	<files>
+		<include>
+			<fileitem>
+				<path>AcercaDe.java</path>
+			</fileitem>
+			<fileitem>
+				<path>FichaNegra.java</path>
+			</fileitem>
+			<fileitem>
+				<path>FichaRoja.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Fichas.java</path>
+			</fileitem>
+			<fileitem>
+				<path>GestorFichas.java</path>
+			</fileitem>
+			<fileitem>
+				<path>GestorMovimiento.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Main.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Movimiento.java</path>
+			</fileitem>
+			<fileitem>
+				<path>NuevoJuego.java</path>
+			</fileitem>
+			<fileitem>
+				<path>PrincipalJuego.java</path>
+			</fileitem>
+			<fileitem>
+				<path>Tablero.java</path>
+			</fileitem>
+		</include>
+	</files>
+	<tasks>
+		<todotaskitem>
+			<description>TODO: Add your code here</description>
+			<filepath>Tablero.java</filepath>
+			<line>68</line>
+			<timestamp>1244673284</timestamp>
+		</todotaskitem>
+		<todotaskitem>
+			<description>TODO: Add your code here</description>
+			<filepath>Tablero.java</filepath>
+			<line>73</line>
+			<timestamp>1244673284</timestamp>
+		</todotaskitem>
+		<todotaskitem>
+			<description>TODO: Add your code here</description>
+			<filepath>Tablero.java</filepath>
+			<line>149</line>
+			<timestamp>1244673284</timestamp>
+		</todotaskitem>
+		<todotaskitem>
+			<description>TODO: Add your code here</description>
+			<filepath>Tablero.java</filepath>
+			<line>153</line>
+			<timestamp>1244673284</timestamp>
+		</todotaskitem>
+		<todotaskitem>
+			<description>TODO: Add your code here</description>
+			<filepath>Tablero.java</filepath>
+			<line>157</line>
+			<timestamp>1244673284</timestamp>
+		</todotaskitem>
+	</tasks>
+</project>
