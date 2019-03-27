@@ -2,14 +2,18 @@ package Interfaz;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import Codigo.Ficha;
 import Codigo.Juego;
 
 public class JuegoLocal {
@@ -29,6 +33,17 @@ public class JuegoLocal {
 	         for (int j=0;j<COLUMNAS;j++)
 	         {
 	            botones[i][j] = new JButton();
+	            botones[i][j].addActionListener(new ActionListener() {
+	    			public void actionPerformed(ActionEvent arg0) {
+	    				for(int i=0;i<8;i++) {
+	    					for(int j=0;j<8;j++) {
+	    						if(botones[i][j]==arg0.getSource()) {
+	    							seleccionarPosicion(i,j);
+	    						}
+	    					}
+	    				}
+	    			}
+	    		});
 	            v.getContentPane().add(botones[i][j]);
 	         }
 	      v.pack();
@@ -37,6 +52,7 @@ public class JuegoLocal {
 	      actualizarTablero();
 	      v.setVisible(true);
 	      v.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+	      
    }
    
    public void actualizarTablero() {
@@ -76,6 +92,30 @@ public class JuegoLocal {
 			}
 	   }
    }
+   
+   public void seleccionarPosicion(int x,int y) {
+	   if(juego.getTablero().getMatriz()[x][y]!=null) {
+		   if(juego.getTurno()==juego.getTablero().getMatriz()[x][y].getColor()) {
+		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
+		   }else {
+			   JOptionPane.showMessageDialog(v, "No es tu turno  -.-");
+		   }
+			   	   
+	   }else {
+		    posicionSeleccionada(x,y);
+	   }
+   }
+   
+   public void seleccionarFicha(Ficha ficha) {
+	   juego.setFichaenespera(ficha);
+   }
+   
+   public void posicionSeleccionada(int x,int y) {
+	   if() {
+		   
+	   }
+   }
+   
    
    public JFrame getV() {
 	   return v;
