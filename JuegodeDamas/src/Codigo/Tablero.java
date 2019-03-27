@@ -109,17 +109,17 @@ public class Tablero {
 			
 			
 		}else {
-			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]==null)) {
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x+1][y-1]==null)) {
 				int[] vector=new int[2];
 				vector[0]=x+1;
-				vector[1]=y+1;
+				vector[1]=y-1;
 				lista.add(vector);
 			}
 			
-			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]==null)) {
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x-1][y-1]==null)) {
 				int[] vector=new int[2];
 				vector[0]=x-1;
-				vector[1]=y+1;
+				vector[1]=y-1;
 				lista.add(vector);
 			}
 		}

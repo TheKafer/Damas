@@ -61,12 +61,8 @@ public class JuegoLocal {
 	   
 	   for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
-				if(juego.getTablero().getMatriz()[i][j]!=null) {	
-					if(juego.getTablero().getMatriz()[i][j].getColor()==0) {
-						botones[i][j].setIcon(null);	
-					}else {
-						botones[i][j].setIcon(null);
-					}
+				if(juego.getTablero().getMatriz()[i][j]==null) {	
+					botones[i][j].setIcon(null);
 					
 				}
 		}
@@ -111,7 +107,7 @@ public class JuegoLocal {
    }
    
    public void seleccionarPosicion(int x,int y) {
-	   
+	   JOptionPane.showMessageDialog(v,x+ " "+y);
 	   if(juego.getTablero().getMatriz()[x][y]!=null) {
 		   if(juego.getTurno()==juego.getTablero().getMatriz()[x][y].getColor()) {
 		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
@@ -145,6 +141,11 @@ public class JuegoLocal {
 			   if(vector[0]==x && vector[1]==y) {
 				   juego.getTablero().moverFicha(juego.getFichaenespera(), x, y);
 				   actualizarTablero();
+				   if(juego.getFichaenespera().getColor()==0) {
+					   juego.setTurno(1);
+				   }else {
+					   juego.setTurno(0);
+				   }
 			   }
 			   
 		   }
