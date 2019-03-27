@@ -1,5 +1,7 @@
 package Codigo;
 
+import java.util.ArrayList;
+
 public class Tablero {
 	
 	private Ficha[][] matriz;
@@ -82,6 +84,51 @@ public class Tablero {
 	
 	public void eliminarFicha(int x,int y) {
 		matriz[x][y]=null;
+	}
+	
+	public ArrayList<int[]> movimientosPosibles(Ficha ficha) {
+		int x=ficha.getX();
+		int y=ficha.getY();
+		ArrayList<int[]> lista=new ArrayList<int[]>();
+		
+		
+		if(ficha.getColor()==0) {
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			
+		}else {
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+		}
+		
+		
+		
+		
+		
+		return lista;
 	}
 	
 	public void comerFichaNormal(Ficha cazadora,Ficha victima) {

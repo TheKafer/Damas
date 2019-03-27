@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -56,6 +58,20 @@ public class JuegoLocal {
    }
    
    public void actualizarTablero() {
+	   
+	   for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(juego.getTablero().getMatriz()[i][j]!=null) {	
+					if(juego.getTablero().getMatriz()[i][j].getColor()==0) {
+						botones[i][j].setIcon(null);	
+					}else {
+						botones[i][j].setIcon(null);
+					}
+					
+				}
+		}
+	}
+	   
 	   ImageIcon imagen_negra=new ImageIcon("Imagenes/fichaNn.jpg");
 	   ImageIcon imagen_blanca=new ImageIcon("Imagenes/fichaRn.jpg");
 	   //Icon icono=new ImageIcon(imagen.getImage().getScaledInstance(botones[1][0].getWidth(), botones[1][0].getHeight(), Image.SCALE_DEFAULT));
@@ -71,6 +87,7 @@ public class JuegoLocal {
 				}
 		}
 	}
+		
    }
    
    public void pintarTablero() {
@@ -94,6 +111,7 @@ public class JuegoLocal {
    }
    
    public void seleccionarPosicion(int x,int y) {
+	   
 	   if(juego.getTablero().getMatriz()[x][y]!=null) {
 		   if(juego.getTurno()==juego.getTablero().getMatriz()[x][y].getColor()) {
 		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
@@ -108,12 +126,31 @@ public class JuegoLocal {
    
    public void seleccionarFicha(Ficha ficha) {
 	   juego.setFichaenespera(ficha);
+	   ArrayList<int[] >movimientos= juego.getTablero().movimientosPosibles(juego.getFichaenespera());
+	   Iterator<int[]> i=movimientos.iterator();
+	   pintarTablero();
+	   while(i.hasNext()) {
+		   int[] vector=i.next();
+		   botones[vector[0]][vector[1]].setBackground(Color.yellow);
+		   
+	   }
    }
    
    public void posicionSeleccionada(int x,int y) {
-	   if() {
-		   
+	   if(juego.getFichaenespera()!=null) {
+		  ArrayList<int[] >movimientos= juego.getTablero().movimientosPosibles(juego.getFichaenespera());
+		  Iterator<int[]> i=movimientos.iterator();
+		  while(i.hasNext()) {
+			   int[] vector=i.next();
+			   if(vector[0]==x && vector[1]==y) {
+				   juego.getTablero().moverFicha(juego.getFichaenespera(), x, y);
+				   actualizarTablero();
+			   }
+			   
+		   }
 	   }
+	   
+	   pintarTablero();
    }
    
    
