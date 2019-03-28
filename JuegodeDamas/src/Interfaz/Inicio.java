@@ -43,7 +43,7 @@ public class Inicio extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		JButton btnJuegoLocal = new JButton("Juego local");
-		btnJuegoLocal.setIcon(new ImageIcon("imagenes\fichaNn.jpg"));
+		btnJuegoLocal.setIcon(new ImageIcon("E:\\ProyectosPersonales\\Workspace-Eclipse\\Proyecto\\Proyecto Damas (JCreator)\\imagenes\\fichaNn.jpg"));
 		btnJuegoLocal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JuegoLocal juego=new JuegoLocal();

@@ -4,13 +4,13 @@ public abstract class Ficha {
 	
 	protected boolean corona;//indica si la ficha es reina o no, reina=true Noreina=false
 	protected int color; //indica si la ficha es blanca o negra, blanca =true negra=false
-	protected int fila;
-	protected int columna;
+	protected int x;
+	protected int y;
 	
-	public Ficha(int fila, int columna) {
+	public Ficha(int x, int y) {
 		this.corona=false;
-		this.fila=fila;
-		this.columna=columna;
+		this.x=x;
+		this.y=y;
 	}
 
 	public boolean isCorona() {
@@ -29,23 +29,21 @@ public abstract class Ficha {
 		this.color = color;
 	}
 
-	public int getFila() {
-		return fila;
+	public int getX() {
+		return x;
 	}
 
-	public void setFila(int fila) {
-		this.fila = fila;
+	public void setX(int x) {
+		this.x = x;
 	}
 
-	public int getColumna() {
-		return columna;
+	public int getY() {
+		return y;
 	}
 
-	public void setColumna(int columna) {
-		this.columna = columna;
+	public void setY(int y) {
+		this.y = y;
 	}
-
-	
 	
 	
 

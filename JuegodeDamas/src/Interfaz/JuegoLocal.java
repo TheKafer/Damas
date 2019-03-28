@@ -107,16 +107,7 @@ public class JuegoLocal {
    }
    
    public void seleccionarPosicion(int x,int y) {
-	   ArrayList<Ficha> fichas=new  ArrayList<Ficha>();
-	   
-	   if(juego.getTurno()==0) {
-		   
-		   fichas=juego.getTablero().posibilidadesComerNegras();
-	   }else {
-		   fichas=juego.getTablero().posibilidadesComerBlancas();
-	   }
-	  
-	  
+	   JOptionPane.showMessageDialog(v,x+ " "+y);
 	   if(juego.getTablero().getMatriz()[x][y]!=null) {
 		   if(juego.getTurno()==juego.getTablero().getMatriz()[x][y].getColor()) {
 		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
@@ -125,38 +116,11 @@ public class JuegoLocal {
 		   }
 			   	   
 	   }else {
-		   pintarPosibilidadesComer(fichas);
 		    posicionSeleccionada(x,y);
-	   }
-	  
-   }
-   
-   public void pintarPosibilidadesComer(ArrayList<Ficha> fichas) {
-	   Iterator<Ficha> i=fichas.iterator();
-	   while(i.hasNext()) {
-		   Ficha ficha=i.next();
-		   ArrayList<int[]> casillas=juego.getTablero().posibilidadComer(ficha);
-		   Iterator<int[]> j=casillas.iterator();
-		   while(j.hasNext()) {
-			   int[] casilla=j.next();
-			   botones[casilla[0]][casilla[1]].setBackground(Color.green);
-		   }
 	   }
    }
    
    public void seleccionarFicha(Ficha ficha) {
-	   
-	   ArrayList<Ficha> fichas=new  ArrayList<Ficha>();
-
-	   if(juego.getTurno()==0) {
-		   
-		   fichas=juego.getTablero().posibilidadesComerNegras();
-	   }else {
-		   fichas=juego.getTablero().posibilidadesComerBlancas();
-	   }
-	   
-	  
-	   if(fichas.size()==0) {
 	   juego.setFichaenespera(ficha);
 	   ArrayList<int[] >movimientos= juego.getTablero().movimientosPosibles(juego.getFichaenespera());
 	   Iterator<int[]> i=movimientos.iterator();
@@ -166,30 +130,10 @@ public class JuegoLocal {
 		   botones[vector[0]][vector[1]].setBackground(Color.yellow);
 		   
 	   }
-	   }else {
-		   
-		   Iterator<Ficha> i=fichas.iterator();
-		   while(i.hasNext()) {
-			   Ficha f=i.next();
-			   if(ficha==f) {
-				   juego.setFichaenespera(ficha);
-			   }
-			   
-		   }
-		   
-	   }
    }
    
    public void posicionSeleccionada(int x,int y) {
 	   if(juego.getFichaenespera()!=null) {
-		   ArrayList<Ficha> fichas=new ArrayList<Ficha>();
-		   if(juego.getTurno()==0) {
-			   fichas=juego.getTablero().posibilidadesComerNegras();
-		   }else {
-			   fichas=juego.getTablero().posibilidadesComerBlancas();
-		   }
-		   
-		   if(fichas.size()==0) {
 		  ArrayList<int[] >movimientos= juego.getTablero().movimientosPosibles(juego.getFichaenespera());
 		  Iterator<int[]> i=movimientos.iterator();
 		  while(i.hasNext()) {
@@ -197,41 +141,6 @@ public class JuegoLocal {
 			   if(vector[0]==x && vector[1]==y) {
 				   juego.getTablero().moverFicha(juego.getFichaenespera(), x, y);
 				   actualizarTablero();
-				   pintarTablero();
-				   if(juego.getFichaenespera().getColor()==0) {
-					   juego.setTurno(1);
-				   }else {
-					   juego.setTurno(0);
-				   }
-			   }
-			   
-		   }
-	   }else {
-		   ArrayList<int[] >movimientos= juego.getTablero().posibilidadComer(juego.getFichaenespera());
-		   Iterator<int[]> i=movimientos.iterator();
-		   while(i.hasNext()) {
-			   int[] vector=i.next();
-			   if(vector[0]==x && vector[1]==y) {
-				    
-				   if(x>juego.getFichaenespera().getFila() && y<juego.getFichaenespera().getColumna()) {
-					   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x-1][y+1]);
-				   }
-				   
-				   if(x<juego.getFichaenespera().getFila() && y<juego.getFichaenespera().getColumna()) {
-					   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y+1]);
-				   }
-				   
-				   if(x>juego.getFichaenespera().getFila() && y>juego.getFichaenespera().getColumna()) {
-					   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x-1][y-1]);
-				   }
-				   
-				   if(x<juego.getFichaenespera().getFila() && y>juego.getFichaenespera().getColumna()) {
-					   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y-1]);
-				   }
-				   
-				   
-				   actualizarTablero();
-				   pintarTablero();
 				   if(juego.getFichaenespera().getColor()==0) {
 					   juego.setTurno(1);
 				   }else {
@@ -241,9 +150,8 @@ public class JuegoLocal {
 			   
 		   }
 	   }
-   }
 	   
-	  
+	   pintarTablero();
    }
    
    
