@@ -72,7 +72,7 @@ public class Tablero {
 				
 					eliminarFicha(ficha.getX(),ficha.getY());
 				}else {
-					System.out.println("Hay una ficha en la posición a mover");
+					System.out.println("Hay una ficha en la posiciï¿½n a mover");
 				}
 			}else {
 				System.out.println("Se sale de las corordenadas del tablero");
@@ -107,6 +107,20 @@ public class Tablero {
 				lista.add(vector);
 			}
 			
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+			
 			
 		}else {
 			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x+1][y-1]==null)) {
@@ -122,6 +136,20 @@ public class Tablero {
 				vector[1]=y-1;
 				lista.add(vector);
 			}
+			
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x+1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x-1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
 		}
 		
 		
@@ -130,6 +158,137 @@ public class Tablero {
 		
 		return lista;
 	}
+	
+	public ArrayList<int[]> movimientosPosiblesReina(Ficha ficha) {
+		int x=ficha.getX();
+		int y=ficha.getY();
+		ArrayList<int[]> lista=new ArrayList<int[]>();
+		
+		if(ficha.getColor()==0) {
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y-1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y-1;
+				lista.add(vector);
+			}
+			
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+			
+			if((x+1<8 && x+1>=0) && (y+1<8 && y+1>=0) && (matriz[x+1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y+1<8 && y+1>=0) && (matriz[x-1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
+			
+			
+		}else {
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x+1][y-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y-1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x-1][y-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y-1;
+				lista.add(vector);
+			}
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x-1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x-1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x+1][y+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=x+1;
+				vector[1]=y+1;
+				lista.add(vector);
+			}
+			
+
+
+			
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x+1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x-1][y-1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y-2;
+				lista.add(vector);
+			}
+			if((x+1<8 && x+1>=0) && (y-1<8 && y-1>=0) && (matriz[x-1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x-2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+			
+			if((x-1<8 && x-1>=0) && (y-1<8 && y+1>=0) && (matriz[x+1][y+1]!=null)) {
+				int[] vector=new int[2];
+				vector[0]=x+2;
+				vector[1]=y+2;
+				lista.add(vector);
+			}
+		}
+		
+		
+		
+		
+		
+		return lista;
+	}
+	
+	
 	
 	public void comerFichaNormal(Ficha cazadora,Ficha victima) {
 		int posicion_x_cazadora=cazadora.getX();
@@ -151,7 +310,7 @@ public class Tablero {
 				eliminarFicha( posicion_x_victima,posicion_y_victima);
 				
 			}else {
-				System.out.println("la posición para comer no esta vacía");
+				System.out.println("la posiciï¿½n para comer no esta vacï¿½a");
 			}
 			
 		}
@@ -170,7 +329,7 @@ public class Tablero {
 				eliminarFicha( posicion_x_victima,posicion_y_victima);
 				
 			}else {
-				System.out.println("la posición para comer no esta vacía");
+				System.out.println("la posiciï¿½n para comer no esta vacï¿½a");
 			}
 			
 		}
@@ -190,7 +349,7 @@ public class Tablero {
 				eliminarFicha( posicion_x_victima,posicion_y_victima);
 				
 			}else {
-				System.out.println("la posición para comer no esta vacía");
+				System.out.println("la posiciï¿½n para comer no esta vacï¿½a");
 			}
 			
 		}
@@ -210,7 +369,7 @@ public class Tablero {
 				eliminarFicha( posicion_x_victima,posicion_y_victima);
 				
 			}else {
-				System.out.println("la posición para comer no esta vacía");
+				System.out.println("la posiciï¿½n para comer no esta vacï¿½a");
 			}
 			
 		}
