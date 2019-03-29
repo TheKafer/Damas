@@ -62,25 +62,35 @@ public class Tablero {
 	
 	public void moverFicha(Ficha ficha,int fila,int columna) {
 		
-			if((fila>=0 && fila<=8) && (columna>=0 && columna<=8) ) {
-				if(matriz[fila][columna]==null) {
-					if(ficha.getColor()==0) {
+		if((fila>=0 && fila<=8) && (columna>=0 && columna<=8) ) {
+			if(matriz[fila][columna]==null) {
+				if(ficha.getColor()==0) {
+					if(ficha.isCorona()) {
 						matriz[fila][columna]=new Ficha_Negra(fila,columna);
+						matriz[fila][columna].setCorona(true);
+					}else {
+						matriz[fila][columna]=new Ficha_Negra(fila,columna);
+					}
+				}else {
+					if(ficha.isCorona()) {
+					matriz[fila][columna]=new Ficha_Blanca(fila,columna);
+					matriz[fila][columna].setCorona(true);
 					}else {
 						matriz[fila][columna]=new Ficha_Blanca(fila,columna);
 					}
-				
-					eliminarFicha(ficha.getFila(),ficha.getColumna());
-				}else {
-					System.out.println("Hay una ficha en la posición a mover");
 				}
+			
+				eliminarFicha(ficha.getFila(),ficha.getColumna());
 			}else {
-				System.out.println("Se sale de las corordenadas del tablero");
-			
+				System.out.println("Hay una ficha en la posición a mover");
 			}
-			
-	   
-    }
+		}else {
+			System.out.println("Se sale de las corordenadas del tablero");
+		
+		}
+		
+   
+}
 	
 	public void eliminarFicha(int fila,int columna) {
 		matriz[fila][columna]=null;
@@ -116,7 +126,7 @@ public class Tablero {
 				lista.add(vector);
 			}
 			
-			if((columna-1<8 && columna-1>=0) && (fila-1<8 && fila+1>=0) && (matriz[fila-1][columna-1]==null)) {
+			if((columna-1<8 && columna-1>=0) && (fila-1<8 && fila-1>=0) && (matriz[fila-1][columna-1]==null)) {
 				int[] vector=new int[2];
 				vector[0]=fila-1;
 				vector[1]=columna-1;
@@ -133,12 +143,13 @@ public class Tablero {
 		for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
 				if(matriz[i][j]!=null) {
-					if(matriz[i][j].getColor()==0) {
+					if(matriz[i][j].getColor()==0 && matriz[i][j].isCorona()==false) {
 					ArrayList<int[]> arreglo=posibilidadComer(matriz[i][j]);
 				
 				if(arreglo.size()!=0) {
 					fichas.add(matriz[i][j]);
 				}
+				
 				}
 				
 				}
@@ -152,7 +163,7 @@ public class Tablero {
 		for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
 				if(matriz[i][j]!=null) {
-					if(matriz[i][j].getColor()==1) {
+					if(matriz[i][j].getColor()==1  && matriz[i][j].isCorona()==false) {
 					ArrayList<int[]> arreglo=posibilidadComer(matriz[i][j]);
 				
 				if(arreglo.size()!=0) {
@@ -241,6 +252,142 @@ public class Tablero {
 		return lista;
 	}
 	
+	
+	public ArrayList<int[]> posibilidadComerReina(Ficha ficha) {
+		int fila=ficha.getFila();
+		int columna=ficha.getColumna();
+		ArrayList<int[]> lista=new ArrayList<int[]>();
+		
+		if(ficha.getColor()==0) {
+			if((fila+1<8 && fila+1>=0) && (columna+1<8 && columna+1>=0)) {
+				if(matriz[fila+1][columna+1]!=null) {
+					if(matriz[fila+1][columna+1].getColor()==1 ) {
+						if((fila+2<8 && fila+2>=0) && (columna+2<8 && columna+2>=0)) {
+							if(matriz[fila+2][columna+2]==null) {
+								int[] vector=new int[2];
+								vector[0]=fila+2;
+								vector[1]=columna+2;
+								lista.add(vector);
+						}
+					}
+				}
+			}
+		}
+			
+		if((fila+1<8 && fila+1>=0) && (columna-1<8 && columna-1>=0)) {
+			if(matriz[fila+1][columna-1]!=null) {
+				if(matriz[fila+1][columna-1].getColor()==1 ) {
+					if((fila+2<8 && fila+2>=0) && (columna-2<8 && columna-2>=0)) {
+						if(matriz[fila+2][columna-2]==null) {
+							int[] vector=new int[2];
+							vector[0]=fila+2;
+							vector[1]=columna-2;
+							lista.add(vector);
+						}
+					}
+				}
+				}
+			}
+		
+		if((fila-1<8 && fila-1>=0) && (columna+1<8 && columna+1>=0)) {
+			if(matriz[fila-1][columna+1]!=null) {
+				if(matriz[fila-1][columna+1].getColor()==1 ) {
+					if((fila-2<8 && fila-2>=0) && (columna+2<8 && columna+2>=0)) {
+						if(matriz[fila-2][columna+2]==null) {
+							int[] vector=new int[2];
+							vector[0]=fila-2;
+							vector[1]=columna+2;
+							lista.add(vector);
+						}
+					}
+				}
+				}
+			}
+		
+		if((fila-1<8 && fila-1>=0) && (columna-1<8 && columna-1>=0)) {
+			if(matriz[fila-1][columna-1]!=null) {
+				if(matriz[fila-1][columna-1].getColor()==1 ) {
+					if((fila-2<8 && fila-2>=0) && (columna-2<8 && columna-2>=0)) {
+						if(matriz[fila-2][columna-2]==null) {
+							int[] vector=new int[2];
+							vector[0]=fila-2;
+							vector[1]=columna-2;
+							lista.add(vector);
+						}
+					}
+				}
+				}
+			}
+			
+			
+		}else {
+			
+			if((fila-1<8 && fila-1>=0) && (columna+1<8 && columna+1>=0)) {
+				if(matriz[fila-1][columna+1]!=null) {
+				if(matriz[fila-1][columna+1].getColor()==0 ) {
+					if((fila-2<8 && fila-2>=0) && (columna+2<8 && columna+2>=0)) {
+						if(matriz[fila-2][columna+2]==null) {
+							int[] vector=new int[2];
+							vector[0]=fila-2;
+							vector[1]=columna+2;
+							lista.add(vector);
+						}
+					}
+				}
+				}
+			}
+			
+			if((fila-1<8 && fila-1>=0) && (columna-1<8 && columna-1>=0)) {
+				if(matriz[fila-1][columna-1]!=null) {
+				if(matriz[fila-1][columna-1].getColor()==0 ) {
+					if((fila-2<8 && fila-2>=0) && (columna-2<8 && columna-2>=0)) {
+						if(matriz[fila-2][columna-2]==null) {
+							int[] vector=new int[2];
+							vector[0]=fila-2;
+							vector[1]=columna-2;
+							lista.add(vector);
+						}
+					}
+				}
+			}
+			}
+			
+			if((fila+1<8 && fila+1>=0) && (columna-1<8 && columna-1>=0)) {
+				if(matriz[fila+1][columna-1]!=null) {
+					if(matriz[fila+1][columna-1].getColor()==0 ) {
+						if((fila+2<8 && fila+2>=0) && (columna-2<8 && columna-2>=0)) {
+							if(matriz[fila+2][columna-2]==null) {
+								int[] vector=new int[2];
+								vector[0]=fila+2;
+								vector[1]=columna-2;
+								lista.add(vector);
+							}
+						}
+					}
+					}
+				}
+			
+			if((fila+1<8 && fila+1>=0) && (columna+1<8 && columna+1>=0)) {
+				if(matriz[fila+1][columna+1]!=null) {
+					if(matriz[fila+1][columna+1].getColor()==0 ) {
+						if((fila+2<8 && fila+2>=0) && (columna+2<8 && columna+2>=0)) {
+							if(matriz[fila+2][columna+2]==null) {
+								int[] vector=new int[2];
+								vector[0]=fila+2;
+								vector[1]=columna+2;
+								lista.add(vector);
+							}
+						}
+					}
+					}
+				}
+				
+				
+		}
+		
+		return lista;
+	}
+	
 	public void comerFichaNormal(Ficha cazadora,Ficha victima) {
 		int posicion_fila_cazadora=cazadora.getFila();
 		int posicion_columna_cazadora=cazadora.getColumna();
@@ -250,11 +397,22 @@ public class Tablero {
 		if(posicion_fila_victima<posicion_fila_cazadora && posicion_columna_victima>posicion_columna_cazadora) {
 			if(matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]==null) {
 				if(cazadora.getColor()==0) {
-					matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+					}
 				}
 				
 				if(cazadora.getColor()==1) {
-					matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora+2);
+
+					}
 				}
 				
 				eliminarFicha(posicion_fila_cazadora,posicion_columna_cazadora);
@@ -269,11 +427,23 @@ public class Tablero {
 		if(posicion_fila_victima>posicion_fila_cazadora && posicion_columna_victima>posicion_columna_cazadora) {
 			if(matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]==null) {
 				if(cazadora.getColor()==0) {
-					matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+
+					}
 				}
 				
 				if(cazadora.getColor()==1) {
-					matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora+2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora+2);
+
+					}
 				}
 				
 				eliminarFicha(posicion_fila_cazadora,posicion_columna_cazadora);
@@ -289,11 +459,21 @@ public class Tablero {
 		if(posicion_fila_victima>posicion_fila_cazadora && posicion_columna_victima<posicion_columna_cazadora) {
 			if(matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]==null) {
 				if(cazadora.getColor()==0) {
-					matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+					}
 				}
 				
 				if(cazadora.getColor()==1) {
-					matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora+2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora+2,posicion_columna_cazadora-2);
+					}
 				}
 				
 				eliminarFicha(posicion_fila_cazadora,posicion_columna_cazadora);
@@ -309,11 +489,21 @@ public class Tablero {
 		if(posicion_fila_victima<posicion_fila_cazadora && posicion_columna_victima<posicion_columna_cazadora) {
 			if(matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]==null) {
 				if(cazadora.getColor()==0) {
-					matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Negra(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+					}
 				}
 				
 				if(cazadora.getColor()==1) {
-					matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+					if(cazadora.isCorona()) {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2].setCorona(true);
+					}else {
+						matriz[ posicion_fila_cazadora-2][posicion_columna_cazadora-2]=new Ficha_Blanca(posicion_fila_cazadora-2,posicion_columna_cazadora-2);
+					}
 				}
 				
 				eliminarFicha(posicion_fila_cazadora,posicion_columna_cazadora);
@@ -327,5 +517,105 @@ public class Tablero {
 		
 	}
 	
-
+	
+	
+public void coronarReinaBlanca() {
+		
+		for (int j=0; j<8; j++) {
+			if (matriz[0][j] instanceof Ficha_Blanca) {
+				matriz[0][j].setCorona(true);
+			}
+		}
+	}
+	
+	public void coronarReinaNegra() {
+		
+		for (int j=0; j<8; j++) {
+			if (matriz[7][j] instanceof Ficha_Negra) {
+				matriz[7][j].setCorona(true);
+			}
+		}
+	}
+	
+	
+	public ArrayList<int[]> movimientosPosiblesReina(Ficha ficha) {
+		int fila=ficha.getFila();
+		int columna=ficha.getColumna();
+		ArrayList<int[]> lista=new ArrayList<int[]>();
+		
+		
+		
+			if((columna+1<8 && columna+1>=0) && (fila+1<8 && fila+1>=0) && (matriz[fila+1][columna+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=fila+1;
+				vector[1]=columna+1;
+				lista.add(vector);
+			}
+			
+			if((columna-1<8 && columna-1>=0) && (fila+1<8 && fila+1>=0) && (matriz[fila+1][columna-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=fila+1;
+				vector[1]=columna-1;
+				lista.add(vector);
+			}
+			
+			
+		
+			if((columna+1<8 && columna+1>=0) && (fila-1<8 && fila-1>=0) && (matriz[fila-1][columna+1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=fila-1;
+				vector[1]=columna+1;
+				lista.add(vector);
+			}
+			
+			if((columna-1<8 && columna-1>=0) && (fila-1<8 && fila-1>=0) && (matriz[fila-1][columna-1]==null)) {
+				int[] vector=new int[2];
+				vector[0]=fila-1;
+				vector[1]=columna-1;
+				lista.add(vector);
+			}
+		
+		return lista;
+		
+	
+	}
+	
+	
+	public ArrayList<Ficha> posibilidadesComerBlancasReina(){
+		ArrayList<Ficha> fichas=new ArrayList<Ficha>();
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(matriz[i][j]!=null) {
+					if(matriz[i][j].getColor()==1 && matriz[i][j].isCorona()==true) {
+					ArrayList<int[]> arreglo=posibilidadComerReina(matriz[i][j]);
+				
+				if(arreglo.size()!=0) {
+					fichas.add(matriz[i][j]);
+				}
+				}
+				
+				}
+			}
+		}
+		return fichas;
+	}
+	
+	public ArrayList<Ficha> posibilidadesComerNegrasReina(){
+		ArrayList<Ficha> fichas=new ArrayList<Ficha>();
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(matriz[i][j]!=null) {
+					if(matriz[i][j].getColor()==0 && matriz[i][j].isCorona()==true) {
+					ArrayList<int[]> arreglo=posibilidadComerReina(matriz[i][j]);
+				
+				if(arreglo.size()!=0) {
+					fichas.add(matriz[i][j]);
+				}
+				}
+				
+				}
+			}
+		}
+		return fichas;
+	}
 }

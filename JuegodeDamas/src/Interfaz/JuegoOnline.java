@@ -18,14 +18,15 @@ import javax.swing.WindowConstants;
 import Codigo.Ficha;
 import Codigo.Juego;
 
-public class JuegoLocal {
+public class JuegoOnline {
    private static final int COLUMNAS = 8;
    private static final int FILAS = 8;
    private JFrame v;
    private Juego juego;
    private JButton[][] botones;
-
-   public JuegoLocal() {
+   private int soyyo;
+   
+   public JuegoOnline(int soyyo) {
 	      v = new JFrame();
 	      juego=new Juego(0);
 	      v.getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
@@ -136,7 +137,7 @@ public class JuegoLocal {
 		  pintarPosibilidadesComer(fichas);
 	  }
 	   if(juego.getTablero().getMatriz()[x][y]!=null) {
-		   if(juego.getTurno()==juego.getTablero().getMatriz()[x][y].getColor()) {
+		   if(juego.getTurno()==soyyo) {
 		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
 		   }else {
 			   JOptionPane.showMessageDialog(v, "No es tu turno  -.-");
@@ -290,10 +291,7 @@ public class JuegoLocal {
 						   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y-1]);
 					   }
 					   
-					   
-						   ArrayList<int[]> movimientos2= juego.getTablero().posibilidadComer(juego.getTablero().getMatriz()[x][y]);
-					   
-						  
+					   ArrayList<int[]> movimientos2=juego.getTablero().posibilidadComer(juego.getTablero().getMatriz()[x][y]);
 					   actualizarTablero();
 					   pintarTablero();
 					   
@@ -308,7 +306,7 @@ public class JuegoLocal {
 					   
 					   
 				   		}else {
-				   			juego.setFichaenespera(juego.getTablero().getMatriz()[x][y]);
+				   			juego.setFichaenespera(null);
 				   		}
 				   }
 				   
@@ -338,27 +336,14 @@ public class JuegoLocal {
 							   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y-1]);
 						   }
 						   
-						   ArrayList<int[]> movimientos2= juego.getTablero().posibilidadComerReina(juego.getTablero().getMatriz()[x][y]);
 						   
-							  
 						   actualizarTablero();
 						   pintarTablero();
-						   
-						   if(movimientos2.size()==0) {
-						   	if(juego.getFichaenespera().getColor()==0) {
+						   if(juego.getFichaenespera().getColor()==0) {
 							   juego.setTurno(1);
-							   juego.setFichaenespera(null);
-						   	}else {
+						   }else {
 							   juego.setTurno(0);
-							   juego.setFichaenespera(null);					   
-							   }
-						   
-						   
-					   		}else {
-					   			juego.setFichaenespera(juego.getTablero().getMatriz()[x][y]);
-					   		}
-						   
-						   
+						   }
 					   }
 					   
 				   }

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Codigo.Juego;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -54,6 +57,15 @@ public class Inicio extends JFrame {
 		contentPane.add(btnJuegoLocal, BorderLayout.NORTH);
 		
 		JButton btnJuegoOnline = new JButton("Juego online");
+		btnJuegoOnline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Juego juego = new Juego(0);
+				Intermedio inter = new Intermedio(juego);
+				inter.setVisible(true);
+				dispose();
+				
+			}
+		});
 		contentPane.add(btnJuegoOnline, BorderLayout.SOUTH);
 	}
 
