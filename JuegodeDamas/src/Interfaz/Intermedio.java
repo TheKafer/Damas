@@ -6,10 +6,18 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.websocket.ContainerProvider;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
 
 import Codigo.Juego;
+import Conection.EventClient;
+import Conection.EventSocket;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.net.URI;
+import java.util.Scanner;
 import java.awt.event.ActionEvent;
 
 public class Intermedio extends JFrame {
@@ -33,9 +41,35 @@ public class Intermedio extends JFrame {
 		JButton btnEstablecerConexion = new JButton("Establecer Conexion");
 		btnEstablecerConexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				juego.establecerConnexion();
 				
-				JuegoOnline juego=new JuegoOnline(1);
+				//cambiar a dirección donde se ca a conectar (servidor)
+		        URI uri = URI.create("ws://192.168.0.200:8080");
+               
+		        try
+		        {
+		            WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+
+		            try
+		            {
+		                // Attempt Connect
+		                Session session = container.connectToServer(EventSocket.class,uri);
+		                // Send a message
+		                session.getBasicRemote().sendText("Hello");
+		                // Close session
+		                //session.close();
+		                String texto;
+		                
+		                
+		            }
+		            finally
+		            {
+		            }
+		        }
+		        catch (Throwable t)
+		        {
+		            t.printStackTrace(System.err);
+		        }
+				
 				
 			}
 		});

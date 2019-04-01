@@ -5,5 +5,6 @@
 	<classpathentry kind="lib" path="JuegodeDamas/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="JuegodeDamas/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="JuegodeDamas/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="E:/ProyectosPersonales/Workspace-Eclipse/Damas/JuegodeDamas/lib"/>
 	<classpathentry kind="output" path="JuegodeDamas/bin"/>
 </classpath>

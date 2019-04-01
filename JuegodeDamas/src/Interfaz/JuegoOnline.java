@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,9 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.websocket.Session;
 
 import Codigo.Ficha;
 import Codigo.Juego;
+import Conection.EventClient;
 
 public class JuegoOnline {
    private static final int COLUMNAS = 8;
@@ -25,10 +28,23 @@ public class JuegoOnline {
    private Juego juego;
    private JButton[][] botones;
    private int soyyo;
-   
-   public JuegoOnline(int soyyo) {
+   private Session sesion;
+
+
+
+public Session getSesion() {
+	return sesion;
+}
+
+public void setSesion(Session sesion) {
+	this.sesion = sesion;
+}
+
+public JuegoOnline(int soyyo, Session sesion) {
+		  this.sesion=sesion;
 	      v = new JFrame();
-	      juego=new Juego(0);
+	      this.soyyo=soyyo;
+	      juego=new Juego(1);
 	      v.getContentPane().setLayout(new GridLayout(FILAS,COLUMNAS));
 			
 	      botones = new JButton [FILAS][COLUMNAS];
@@ -137,7 +153,7 @@ public class JuegoOnline {
 		  pintarPosibilidadesComer(fichas);
 	  }
 	   if(juego.getTablero().getMatriz()[x][y]!=null) {
-		   if(juego.getTurno()==soyyo) {
+		   if(juego.getTurno()==soyyo && juego.getTablero().getMatriz()[x][y].getColor()==soyyo) {
 		   		seleccionarFicha(juego.getTablero().getMatriz()[x][y]);
 		   }else {
 			   JOptionPane.showMessageDialog(v, "No es tu turno  -.-");
@@ -161,6 +177,41 @@ public class JuegoOnline {
 			   botones[casilla[0]][casilla[1]].setBackground(Color.green);
 		   }
 	   }
+   }
+   
+   public void recibirMensaje(int posicionfinalfila,int posicionfinalcolumna,int posicioninicialfila,int posicioninicialcolumna,int turno) {
+	   int x=posicionfinalfila;
+	   int y=posicionfinalcolumna;
+	   juego.setFichaenespera(juego.getTablero().getMatriz()[posicioninicialfila][posicioninicialcolumna]);
+	   
+		   juego.setTurno(turno);
+	   
+	   
+	   if(posicionfinalfila==posicioninicialfila-2 || posicionfinalfila==posicioninicialfila+2) {
+		   if(x>juego.getFichaenespera().getFila() && y<juego.getFichaenespera().getColumna()) {
+			   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x-1][y+1]);
+		   }
+		   
+		   if(x<juego.getFichaenespera().getFila() && y<juego.getFichaenespera().getColumna()) {
+			   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y+1]);
+		   }
+		   
+		   if(x>juego.getFichaenespera().getFila() && y>juego.getFichaenespera().getColumna()) {
+			   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x-1][y-1]);
+		   }
+		   
+		   if(x<juego.getFichaenespera().getFila() && y>juego.getFichaenespera().getColumna()) {
+			   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y-1]);
+		   }
+		   
+	   }else {
+		   juego.getTablero().moverFicha(juego.getFichaenespera(), posicionfinalfila, posicionfinalcolumna);
+	   }
+	   
+	   
+	   actualizarTablero();
+	   pintarTablero();
+	   juego.setFichaenespera(null);
    }
    
    public void seleccionarFicha(Ficha ficha) {
@@ -215,6 +266,25 @@ public class JuegoOnline {
 	   }
    }
    
+   
+   
+   public void enviarInfo(int posicionfinalfila,int posicionfinalcolumna,int posicioninicialfila,int posicioninicialcolumna,int turno) {
+	   //Cosas de la conexión para enviar la info
+	   if(turno==1) {
+		   turno=0;
+	   }else {
+		   turno=1;
+	   }
+	   String text="mov;"+posicioninicialfila+";"+posicioninicialcolumna+";"+posicionfinalfila+";"+posicionfinalcolumna+";"+turno;
+	   try {
+		sesion.getBasicRemote().sendText(text);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   
+   }
+   
    public void posicionSeleccionada(int x,int y) {
 	   if(juego.getFichaenespera()!=null) {
 		   ArrayList<Ficha> fichas=new ArrayList<Ficha>();
@@ -233,13 +303,17 @@ public class JuegoOnline {
 				  while(i.hasNext()) {
 				  int[] vector=i.next();
 			   if(vector[0]==x && vector[1]==y) {
+				  
 				   juego.getTablero().moverFicha(juego.getFichaenespera(), x, y);
 				   actualizarTablero();
 				   pintarTablero();
 				   if(juego.getFichaenespera().getColor()==0) {
+					   
+					   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
 					   juego.setTurno(1);
 					   juego.setFichaenespera(null);
 				   }else {
+					   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
 					   juego.setTurno(0);
 					   juego.setFichaenespera(null);
 				   }
@@ -257,9 +331,11 @@ public class JuegoOnline {
 				   actualizarTablero();
 				   pintarTablero();
 				   if(juego.getFichaenespera().getColor()==0) {
+					   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
 					   juego.setTurno(1);
 					   juego.setFichaenespera(null);
 				   }else {
+					   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
 					   juego.setTurno(0);
 					   juego.setFichaenespera(null);
 				   }
@@ -291,21 +367,26 @@ public class JuegoOnline {
 						   juego.getTablero().comerFichaNormal(juego.getFichaenespera(), juego.getTablero().getMatriz()[x+1][y-1]);
 					   }
 					   
+					   
+					   
 					   ArrayList<int[]> movimientos2=juego.getTablero().posibilidadComer(juego.getTablero().getMatriz()[x][y]);
 					   actualizarTablero();
 					   pintarTablero();
 					   
 					   if(movimientos2.size()==0) {
 					   	if(juego.getFichaenespera().getColor()==0) {
+					   		enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
 						   juego.setTurno(1);
 						   juego.setFichaenespera(null);
 					   	}else {
+					   		enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
 						   juego.setTurno(0);
 						   juego.setFichaenespera(null);					   
 						   }
 					   
 					   
 				   		}else {
+				   			enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),soyyo);
 				   			juego.setFichaenespera(null);
 				   		}
 				   }
@@ -340,8 +421,10 @@ public class JuegoOnline {
 						   actualizarTablero();
 						   pintarTablero();
 						   if(juego.getFichaenespera().getColor()==0) {
+							   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
 							   juego.setTurno(1);
 						   }else {
+							   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
 							   juego.setTurno(0);
 						   }
 					   }
