@@ -71,10 +71,10 @@ public class JuegoLocal {
 			juego.getTablero().coronarReinaNegra();
 	}
 	   
-	   ImageIcon imagen_negra=new ImageIcon("Imagenes/fichaNn.jpg");
-	   ImageIcon imagen_negra_Reina=new ImageIcon("Imagenes/fichaRNn.jpg");
-	   ImageIcon imagen_blanca=new ImageIcon("Imagenes/fichaRn.jpg");
-	   ImageIcon imagen_blanca_Reina=new ImageIcon("Imagenes/fichaRRn.jpg");
+	   ImageIcon imagen_negra=new ImageIcon("JuegodeDamas/Imagenes/fichaNn.jpg");
+	   ImageIcon imagen_negra_Reina=new ImageIcon("JuegodeDamas/Imagenes/fichaRNn.jpg");
+	   ImageIcon imagen_blanca=new ImageIcon("JuegodeDamas/Imagenes/fichaRn.jpg");
+	   ImageIcon imagen_blanca_Reina=new ImageIcon("JuegodeDamas/Imagenes/fichaRRn.jpg");
 	   //Icon icono=new ImageIcon(imagen.getImage().getScaledInstance(botones[1][0].getWidth(), botones[1][0].getHeight(), Image.SCALE_DEFAULT));
 		for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
