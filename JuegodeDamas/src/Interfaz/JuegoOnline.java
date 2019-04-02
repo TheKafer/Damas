@@ -387,7 +387,8 @@ public JuegoOnline(int soyyo, Session sesion) {
 					   
 				   		}else {
 				   			enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),soyyo);
-				   			juego.setFichaenespera(null);
+				   			
+				   			
 				   		}
 				   }
 				   
@@ -418,15 +419,32 @@ public JuegoOnline(int soyyo, Session sesion) {
 						   }
 						   
 						   
+						   
+						   ArrayList<int[]> movimientos2=juego.getTablero().posibilidadComerReina(juego.getTablero().getMatriz()[x][y]);
 						   actualizarTablero();
 						   pintarTablero();
-						   if(juego.getFichaenespera().getColor()==0) {
-							   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
+						   
+						   if(movimientos2.size()==0) {
+						   	if(juego.getFichaenespera().getColor()==0) {
+						   		enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),1);
 							   juego.setTurno(1);
-						   }else {
-							   enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
+							   juego.setFichaenespera(null);
+						   	}else {
+						   		enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),0);
 							   juego.setTurno(0);
-						   }
+							   juego.setFichaenespera(null);					   
+							   }
+						   
+						   
+					   		}else {
+					   			enviarInfo(x,y,juego.getFichaenespera().getFila(),juego.getFichaenespera().getColumna(),soyyo);
+					   			
+					   		}
+						   
+						   actualizarTablero();
+						   pintarTablero();
+						   
+							
 					   }
 					   
 				   }

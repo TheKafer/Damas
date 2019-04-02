@@ -43,7 +43,7 @@ public class Intermedio extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				//cambiar a dirección donde se ca a conectar (servidor)
-		        URI uri = URI.create("ws://192.168.0.200:8080");
+		        URI uri = URI.create("ws://localhost:8080");
                
 		        try
 		        {
